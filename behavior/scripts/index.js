@@ -77,17 +77,43 @@ prompt() {
 }
 })
 
+const handleSalesConfirmation = client.createStep({
+satisfied() {
+  return false
+},
+
+prompt() {
+  client.addResponse('client_sale/confirmation', {company_name: "xyz"})
+  client.done()
+}
+})
+
+const handleExpensConfirmation = client.createStep({
+satisfied() {
+  return false
+},
+
+prompt() {
+  client.addResponse('client_expense/confirmation', {company_name: "xyz"})
+  client.done()
+}
+})
+
 client.runFlow({
   classifications: {
     goodbye: 'goodbye',
     greeting: 'greeting',
-    "add/client": 'addClient'
+    "add/client": 'clientAdd',
+    "client/sale": 'clientSale',
+    "client/expense": 'clientExpense'
     },
 
   streams: {
     goodbye: handleGoodbye,
     greeting: handleGreeting,
-    addClient: handleConfirmation,
+    clientAdd: handleConfirmation,
+    clientSale: handleSalesConfirmation,
+    clientExpense:handleExpensConfirmation,
     main: 'onboarding',
     onboarding: [sayHello],
     end: [untrained]
