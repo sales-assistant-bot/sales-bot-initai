@@ -9,8 +9,8 @@ hi bot
 < hello
 * greeting
 
-please store [XYZ](company#name) as a new company
+please store [XYZ](company_name) as a new company
 * add/client
 
-< I have added [XYZ](company#name).
-* affirmative/confirm
+< I have added [XYZ](company_name).
+* client_add/confirm

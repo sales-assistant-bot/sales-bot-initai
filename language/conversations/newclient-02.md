@@ -9,11 +9,11 @@ hey you
 < hi there
 * greeting
 
-can you add a new client [xyz](company#name)?
+can you add a new client [xyz](company_name)?
 * add/client
 
-< client [xyz](company#name) added
-* affirmative/confirm
+< client [xyz](company_name) added
+* client_add/confirm
 
 bye
 * goodbye

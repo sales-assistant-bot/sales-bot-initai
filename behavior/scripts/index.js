@@ -39,7 +39,7 @@ exports.handle = (client) => {
   },
 
   prompt() {
-    client.addResponse('greeting')
+    client.addResponse('greeting', {name: "Joe"})
     client.done()
   }
 })
@@ -72,7 +72,7 @@ satisfied() {
 },
 
 prompt() {
-  client.addResponse('affirmative/confirm')
+  client.addResponse('client_add/confirm', {company_name})
   client.done()
 }
 })
@@ -81,7 +81,7 @@ client.runFlow({
   classifications: {
     goodbye: 'goodbye',
     greeting: 'greeting',
-    addClient: 'add/client',
+    "add/client": 'addClient',
     affirmativeConfirm: 'affirmative/confirm'
   },
   streams: {
