@@ -56,17 +56,17 @@ const handleGoodbye = client.createStep({
 
 
 
-  client.runFlow({
-    classifications: {
-      // map inbound message classifications to names of streams
-    },
-    autoResponses: {
-      // configure responses to be automatically sent as predicted by the machine learning model
-    },
-    streams: {
-      main: 'onboarding',
-      onboarding: [sayHello],
-      end: [untrained],
-    },
-  })
+client.runFlow({
+  classifications: {
+    goodbye: 'goodbye',
+    greeting: 'greeting'
+  },
+  streams: {
+    goodbye: handleGoodbye,
+    greeting: handleGreeting,
+    main: 'onboarding',
+    onboarding: [sayHello],
+    end: [untrained]
+  }
+})
 }
