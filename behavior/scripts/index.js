@@ -55,16 +55,39 @@ const handleGoodbye = client.createStep({
   }
 })
 
+const handleAddClient = client.createStep({
+  satisfied() {
+    return false
+  },
 
+  prompt() {
+    client.addResponse('add/client')
+    client.done()
+  }
+})
+
+const handleConfirmation = client.createStep({
+satisfied() {
+  return false
+},
+
+prompt() {
+  client.addResponse('affirmative/confirm')
+  client.done()
+}
+})
 
 client.runFlow({
   classifications: {
     goodbye: 'goodbye',
-    greeting: 'greeting'
+    greeting: 'greeting',
+    addClient: 'add/client',
+    affirmativeConfirm: 'affirmative/confirm'
   },
   streams: {
     goodbye: handleGoodbye,
     greeting: handleGreeting,
+    addClient:[firstAddClient, affirmativeConfirm],
     main: 'onboarding',
     onboarding: [sayHello],
     end: [untrained]
