@@ -87,8 +87,7 @@ client.runFlow({
   streams: {
     goodbye: handleGoodbye,
     greeting: handleGreeting,
-    addClient:handleAddClient,
-    affirmativeConfirm: handleConfirmation,
+    addClient:[handleAddClient, handleConfirmation],
     main: 'onboarding',
     onboarding: [sayHello],
     end: [untrained]
