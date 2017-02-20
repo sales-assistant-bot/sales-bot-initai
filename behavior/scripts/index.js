@@ -33,6 +33,29 @@ exports.handle = (client) => {
     }
   })
 
+  const handleGreeting = client.createStep({
+  satisfied() {
+    return false
+  },
+
+  prompt() {
+    client.addResponse('greeting/welcome')
+    client.done()
+  }
+})
+const handleGoodbye = client.createStep({
+  satisfied() {
+    return false
+  },
+
+  prompt() {
+    client.addResponse('goodbye')
+    client.done()
+  }
+})
+
+
+
   client.runFlow({
     classifications: {
       // map inbound message classifications to names of streams
