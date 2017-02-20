@@ -7,7 +7,7 @@ Hi,
 * greeting
 
 < Hello
-* welcome
+* greeting
 
 bye
 * goodbye
