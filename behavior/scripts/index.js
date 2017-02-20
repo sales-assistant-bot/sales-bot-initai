@@ -39,7 +39,7 @@ exports.handle = (client) => {
   },
 
   prompt() {
-    client.addResponse('greeting', {name: "Joe"})
+    client.addResponse('greeting', {name: "randy"})
     client.done()
   }
 })
@@ -84,6 +84,7 @@ satisfied() {
 
 prompt() {
   client.addResponse('client_sale/confirmation', {company_name: "xyz"})
+  console.log(client.addResponse)
   client.done()
 }
 })
@@ -99,13 +100,26 @@ prompt() {
 }
 })
 
+const handleThanks = client.createStep({
+  satisfied() {
+    return false
+  },
+
+  prompt() {
+    client.addResponse('thanks')
+    client.done()
+  }
+})
+
 client.runFlow({
   classifications: {
     goodbye: 'goodbye',
     greeting: 'greeting',
     "add/client": 'clientAdd',
     "client/sale": 'clientSale',
-    "client/expense": 'clientExpense'
+    "client/expense": 'clientExpense',
+    thanks: 'welcome'
+
     },
 
   streams: {
@@ -114,6 +128,7 @@ client.runFlow({
     clientAdd: handleConfirmation,
     clientSale: handleSalesConfirmation,
     clientExpense:handleExpensConfirmation,
+    welcome: handleThanks,
     main: 'onboarding',
     onboarding: [sayHello],
     end: [untrained]
