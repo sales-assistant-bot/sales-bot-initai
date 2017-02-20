@@ -12,5 +12,5 @@ hey you
 bye
 * goodbye
 
-< see you later [skat8r](documentation_link)
+< see you later skat8r
 * goodbye

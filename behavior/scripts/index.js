@@ -39,7 +39,7 @@ exports.handle = (client) => {
   },
 
   prompt() {
-    client.addResponse('greeting', {name: "Penis"})
+    client.addResponse('greeting', {name: "Joe"})
     client.done()
   }
 })
@@ -55,6 +55,16 @@ const handleGoodbye = client.createStep({
   }
 })
 
+  const handleAddClient = client.createStep({
+    satisfied() {
+      return false
+    },
+
+    prompt() {
+      client.addResponse('add/client')
+      client.done()
+    }
+  })
 
 const handleConfirmation = client.createStep({
 satisfied() {
