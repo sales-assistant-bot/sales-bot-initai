@@ -1,4 +1,6 @@
 'use strict'
+var axios = require('axios')
+var hostName = 'https://decode-bot-project-sql-ajdez.c9users.io'
 
 exports.handle = (client) => {
   // Create steps
@@ -96,6 +98,27 @@ exports.handle = (client) => {
     prompt() {
       const company = client.getFirstEntityWithRole(client.getMessagePart(), 'company_name')
       const amount = client.getFirstEntityWithRole(client.getMessagePart(), 'amount_of_money')
+      axios.get(`${hostName}/company?name=${company.value}`)
+      .then(function(res){
+        //assuming some data structure on res
+        var companies = res.data
+        console.log(companies)
+        if(companies.length < 1){
+          client.addResponse('You dumbnutz');
+          client.done();
+        }
+        if (companies.length === 1){
+          var companyID = companies[0].id
+          axios.post('/companies/:id/expenses' , {companyID:companyID , amount: amount.value})
+          client.addResponse('client_expense/confirmation', {company_name:company.value, amount_of_money:amount.value})
+          client.done()
+        }
+        if (companies.length > 1) {
+
+        }
+      })
+      .catch(err => console.log(err))
+
       /*
       1. Find the company ID based on the name (GET /companies?name={comapny1})
         2a: if there is no company, addResponse to tell the user hes stupid
@@ -104,8 +127,7 @@ exports.handle = (client) => {
       3. Inser the expense by POST /companies/:id/expenses or POST /expenses {companyId: 1, amount: 100}
       4. Respond with a confirmation
       */
-      client.addResponse('client_sale/confirmation', {company_name:company.value, amount_of_money:amount.value})
-      client.done()
+
     }
   })
 
@@ -115,7 +137,7 @@ exports.handle = (client) => {
     },
 
     prompt() {
-      client.addResponse('thanks')
+      client.addResponse('thanks Boo')
       client.done()
     }
   })
