@@ -81,9 +81,9 @@ exports.handle = (client) => {
 
     prompt() {
       const company = client.getFirstEntityWithRole(client.getMessagePart(), 'company_name')
-      const amount = client.getFirstEntityWithRole(client.getMessagePart(), 'amount-of-money/dollars')
+      const amount = client.getFirstEntityWithRole(client.getMessagePart(), 'amountOfMoney_dollars')
       console.log('XXXXXXXXXX', company, amount);
-      client.addResponse('client_sale/confirmation', {company_name:company.value,'amount-of-money/dollars':amount.value})
+      client.addResponse('client_sale/confirmation', {company_name:company.value,'amountOfMoney_dollars':amount.value})
       client.done()
     }
   })
@@ -95,7 +95,7 @@ exports.handle = (client) => {
     },
     prompt(next) {
       const company = client.getFirstEntityWithRole(client.getMessagePart(), 'company_name')
-      const amount = client.getFirstEntityWithRole(client.getMessagePart(), 'amount-of-money/dollars')
+      const amount = client.getFirstEntityWithRole(client.getMessagePart(), 'amountOfMoney_dollars')
       /*
       1. Find the company ID based on the name (GET /companies?name={comapny1})
         2a: if there is no company, addResponse to tell the user hes stupid
@@ -104,7 +104,7 @@ exports.handle = (client) => {
       3. Inser the expense by POST /companies/:id/expenses or POST /expenses {companyId: 1, amount: 100}
       4. Respond with a confirmation
       */
-      client.addResponse('client_sale/confirmation', {company_name:company.value,'amount-of-money/dollars':amount})
+      client.addResponse('client_sale/confirmation', {company_name:company.value,'amountOfMoney_dollars':amount})
       client.done()
     }
   })

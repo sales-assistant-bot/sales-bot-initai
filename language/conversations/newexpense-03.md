@@ -3,8 +3,8 @@ title: newexpense-03
 timestamp: 2017-02-20T17:09:56.193613591-05:00
 ---
 
-i just spent [40$](amount-of-money/dollars) on an event for [xyz](company_name)
+i just spent [40](amountOfMoney_dollars) on an event for [Adidas](company_name)
 * client/expense
 
-< I will put [40$](amount-of-money/dollars) under expense for [xyz](company_name) 
+< I will put [40$](amountOfMoney_dollars) under expense for [Adidas](company_name) 
 * client_expense/confirmation
