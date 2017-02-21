@@ -9,8 +9,8 @@ hi [Bobby](name)
 < hello
 * greeting
 
-please add [xyz](Company_name) to the clients list
+please add [xyz](company_name) to the clients list
 * add/client
 
-< new [client](Company_name) added
+< new [client](company_name) added
 * client_add/confirm

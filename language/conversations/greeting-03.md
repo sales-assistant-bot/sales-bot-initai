@@ -6,7 +6,7 @@ timestamp: 2017-02-20T14:49:44.751571666-05:00
 hi
 * greeting
 
-< hello [Joe](name)
+< hello
 * greeting
 
 goodbye
