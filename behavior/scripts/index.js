@@ -89,14 +89,16 @@ prompt() {
 }
 })
 
-const handleExpensConfirmation = client.createStep({
+const handleExpenseConfirmation = client.createStep({
 satisfied() {
   return false
 },
 
 prompt() {
+  console.log("MESSAGE PART", JSON.stringify(client.getEntities(client.getMessagePart(), 'company_name'), null, 4));
   client.addResponse('client_expense/confirmation', {company_name: "xyz"})
   client.done()
+  //client.getmessageparts()
 }
 })
 
@@ -127,7 +129,7 @@ client.runFlow({
     greeting: handleGreeting,
     clientAdd: handleConfirmation,
     clientSale: handleSalesConfirmation,
-    clientExpense:handleExpensConfirmation,
+    clientExpense:handleExpenseConfirmation,
     welcome: handleThanks,
     main: 'onboarding',
     onboarding: [sayHello],
