@@ -35,7 +35,7 @@ exports.handle = (client) => {
     },
 
     prompt() {
-      client.addResponse('greeting', {name: "BIG BLACK COCK"})
+      client.addResponse('greeting')
       client.done()
     }
   })
@@ -69,7 +69,7 @@ exports.handle = (client) => {
 
     prompt() {
       const company = client.getFirstEntityWithRole(client.getMessagePart(), 'company_name')
-      client.addResponse('client_add/confirm', {company_name: company1.value})
+      client.addResponse('client_add/confirm', {company_name:company.value})
       client.done()
     }
   })
@@ -82,7 +82,8 @@ exports.handle = (client) => {
     prompt() {
       const company = client.getFirstEntityWithRole(client.getMessagePart(), 'company_name')
       const amount = client.getFirstEntityWithRole(client.getMessagePart(), 'amount-of-money/dollars')
-      client.addResponse('client_sale/confirmation', {company_name:company.value}, {'amount-of-money/dollars':amount})
+      console.log('XXXXXXXXXX', company, amount);
+      client.addResponse('client_sale/confirmation', {company_name:company.value,'amount-of-money/dollars':amount.value})
       client.done()
     }
   })
@@ -103,7 +104,7 @@ exports.handle = (client) => {
       3. Inser the expense by POST /companies/:id/expenses or POST /expenses {companyId: 1, amount: 100}
       4. Respond with a confirmation
       */
-      client.addResponse('client_expense/confirmation', {company_name:company.value}, {'amount-of-money/dollars':amount})
+      client.addResponse('client_sale/confirmation', {company_name:company.value,'amount-of-money/dollars':amount})
       client.done()
     }
   })
