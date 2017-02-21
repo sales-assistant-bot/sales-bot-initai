@@ -6,5 +6,5 @@ timestamp: 2017-02-20T17:09:56.193613591-05:00
 i just spent [40$](amount-of-money/dollars) on an event for [xyz](company_name)
 * client/expense
 
-< I will put that expense under [xyz](company_name)
+< I will put [40$](amount-of-money/dollars) under expense for [xyz](company_name) 
 * client_expense/confirmation
