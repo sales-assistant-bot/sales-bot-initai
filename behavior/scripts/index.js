@@ -69,10 +69,18 @@ exports.handle = (client) => {
       return false
     },
 
-    prompt() {
+    prompt(next) {
       const company = client.getFirstEntityWithRole(client.getMessagePart(), 'company_name')
-      client.addResponse('client_add/confirm', {company_name:company.value})
-      client.done()
+
+      console.log('ADDING COMPANY ' + company.value)
+      axios.post(`${hostName}/company`, {name: company.value}).then(result => {
+        client.addResponse('client_add/confirm', {company_name: company.value})
+        client.done()
+      }).catch(err => {
+        client.addTextResponse('This comapny name already exists');
+        client.done()
+      })
+
     }
   })
 
@@ -81,12 +89,38 @@ exports.handle = (client) => {
       return false
     },
 
-    prompt() {
+    prompt(next) {
       const company = client.getFirstEntityWithRole(client.getMessagePart(), 'company_name')
       const amount = client.getFirstEntityWithRole(client.getMessagePart(), 'amount_of_money')
-      console.log('XXXXXXXXXX', company, amount);
-      client.addResponse('client_sale/confirmation', {company_name:company.value, amount_of_money:amount.value})
-      client.done()
+      axios.get(`${hostName}/company?name=${company.value}`)
+      .then(function(res) {
+        //assuming some data structure on res
+        var companies = res.data
+        console.log('-------------------',companies)
+        if (companies.length < 1) {
+          client.addTextResponse('You dumbnutz this company does not exist go get a hint about life');
+          client.done();
+        }
+        else if (companies.length === 1) {
+          var companyID = companies[0].id
+
+          axios.post(`${hostName}/sales?companyId=${companyID}`, {customer_id: companyID, amount: amount.value})
+          .then(response => {
+            client.addResponse('client_sale/confirmation', {
+              company_name: company.value,
+              amount_of_money: amount.value
+            })
+            client.done()
+          })
+        }
+        // else if (companies.length <= 3) {
+        //   // do buttons WE WILL DO THIS LATER
+        // }
+        else {
+          // reply saying there are too many results
+        }
+      })
+      .catch(err => console.log(err))
     }
   })
 
@@ -98,28 +132,36 @@ exports.handle = (client) => {
     prompt() {
       const company = client.getFirstEntityWithRole(client.getMessagePart(), 'company_name')
       const amount = client.getFirstEntityWithRole(client.getMessagePart(), 'amount_of_money')
-      axios.get(`${hostName}/company?name=${company.value}`)
-      .then(function(res){
+      axios.get(`${hostName}/company?name=${company.value}`).then(function(res) {
         //assuming some data structure on res
         var companies = res.data
         console.log(companies)
-        if(companies.length < 1){
+        if (companies.length < 1) {
           client.addResponse('You dumbnutz');
           client.done();
         }
-        if (companies.length === 1){
+        if (companies.length === 1) {
           var companyID = companies[0].id
-          axios.post('/companies/:id/expenses' , {companyID:companyID , amount: amount.value})
-          client.addResponse('client_expense/confirmation', {company_name:company.value, amount_of_money:amount.value})
+          axios.post(`${hostName}/expenses?companyId=${companyID}`, {
+            customer_id: companyID,
+            amount: amount.value
+          })
+          client.addResponse('client_expense/confirmation', {
+            company_name: company.value,
+            amount_of_money: amount.value
+          })
           client.done()
         }
-        if (companies.length > 1) {
-
-        }
       })
-      .catch(err => console.log(err))
+      // if (companies.length > 1)
+      // {
+      //   //make button selection
+      // }
+        .catch(err => console.log(err))
+    }
+  })
 
-      /*
+  /*
       1. Find the company ID based on the name (GET /companies?name={comapny1})
         2a: if there is no company, addResponse to tell the user hes stupid
         2b: if there is only one, then get its ID and move to step 3
@@ -128,16 +170,13 @@ exports.handle = (client) => {
       4. Respond with a confirmation
       */
 
-    }
-  })
-
   const handleThanks = client.createStep({
     satisfied() {
       return false
     },
 
     prompt() {
-      client.addResponse('thanks Boo')
+      client.addResponse('welcome')
       client.done()
     }
   })
