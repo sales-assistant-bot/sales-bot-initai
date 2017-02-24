@@ -1,4 +1,4 @@
-'use strict'
+  'use strict'
 var axios = require('axios')
 var hostName = 'https://decode-bot-project-sql-ajdez.c9users.io'
 
@@ -89,7 +89,7 @@ exports.handle = (client) => {
       return false
     },
 
-    prompt(next) {
+     prompt() {
       const company = client.getFirstEntityWithRole(client.getMessagePart(), 'company_name')
       const amount = client.getFirstEntityWithRole(client.getMessagePart(), 'amount_of_money')
       axios.get(`${hostName}/company?name=${company.value}`)
@@ -105,20 +105,20 @@ exports.handle = (client) => {
           var companyID = companies[0].id
 
           axios.post(`${hostName}/sales?companyId=${companyID}`, {customer_id: companyID, amount: amount.value})
-          .then(response => {
+          //.then(response => {
             client.addResponse('client_sale/confirmation', {
               company_name: company.value,
               amount_of_money: amount.value
             })
             client.done()
-          })
+          //})
         }
         // else if (companies.length <= 3) {
         //   // do buttons WE WILL DO THIS LATER
         // }
-        else {
+        //else {
           // reply saying there are too many results
-        }
+        /}
       })
       .catch(err => console.log(err))
     }
