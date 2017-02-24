@@ -118,7 +118,7 @@ exports.handle = (client) => {
         // }
         //else {
           // reply saying there are too many results
-        /}
+        //}
       })
       .catch(err => console.log(err))
     }
