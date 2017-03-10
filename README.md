@@ -1,5 +1,9 @@
 # Bobby
 
+## Demo
+* Click link below to see demo presentation of the Sales Bot Project
+* [Sales Bot Demo](https://www.youtube.com/watch?v=KC0GPHN8mYs)
+
 ## Development
 
 See the [Quickstart](http://docs.init.ai/docs/quickstart) for details on setting up your development environment
